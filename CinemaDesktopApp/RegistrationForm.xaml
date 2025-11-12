@@ -1,0 +1,58 @@
+﻿<Window x:Class="CinemaDesktopApp.RegistrationForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CinemaDesktopApp"
+        mc:Ignorable="d"
+        Title="Регистрация нового пользователя" Height="350" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!--login-->
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Text="Логин:"
+                   VerticalAlignment="Center" Margin="0,0,10,10"/>
+        <TextBox Grid.Row="1" Grid.Column="1"
+                 x:Name="TextBoxLogin"
+                 MaxLength="50"
+                 Margin="0,0,0,10"
+                 TextChanged="TextBoxLogin_TextChanged"/>
+        <!--password-->
+        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Text="Пароль:"
+                   VerticalAlignment="Center" Margin="0,0,10,10"/>
+        <TextBox Grid.Row="2" Grid.Column="1"
+                 x:Name="TextBoxPassword"
+                 MaxLength="50"
+                 Margin="0,0,0,10"
+                 TextChanged="TextBoxPassword_TextChanged"/>
+        <!--подтверд password-->
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Text="Подтверждение пароля:"
+                   VerticalAlignment="Center" Margin="0,0,10,10"/>
+        <TextBox Grid.Row="1" Grid.Column="1"
+                 x:Name="TextBoxConfirmPassword"
+                 MaxLength="50"
+                 Margin="0,0,0,10"
+                 TextChanged="txtConfirmPassword_TextChanged"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="ButtonRegister" Content="Зарегистрuровать"
+                    Width="120" Height="30" Click="btnRegister_Click"/>
+            <Button x:Name="ButtonCancel" Content="Отмена"
+                    Width="80" Height="30" Click="btnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

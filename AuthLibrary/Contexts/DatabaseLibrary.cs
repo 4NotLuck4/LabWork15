@@ -18,8 +18,6 @@ public partial class DatabaseLibrary : DbContext
 
     public virtual DbSet<CinemaPrivilege> CinemaPrivileges { get; set; }
 
-    public virtual DbSet<CinemaRolePrivilege> CinemaRolePrivileges { get; set; }
-
     public virtual DbSet<CinemaUser> CinemaUsers { get; set; }
 
     public virtual DbSet<CinemaUserRole> CinemaUserRoles { get; set; }
@@ -41,28 +39,6 @@ public partial class DatabaseLibrary : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<CinemaRolePrivilege>(entity =>
-        {
-            entity.HasKey(e => new { e.RoleId, e.PrivilegeId }).HasName("PK__CinemaRo__51C4B9FFD5F173A7");
-
-            entity.ToTable("CinemaRolePrivilege");
-
-            entity.HasOne(d => d.Privilege).WithMany(p => p.CinemaRolePrivileges)
-                .HasForeignKey(d => d.PrivilegeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CinemaRol__Privi__2B0A656D");
-
-            entity.HasOne(d => d.Role).WithMany(p => p.CinemaRolePrivileges)
-                .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CinemaRolePrivilege_CinemaUser");
-
-            entity.HasOne(d => d.RoleNavigation).WithMany(p => p.CinemaRolePrivileges)
-                .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CinemaRol__RoleI__2A164134");
-        });
-
         modelBuilder.Entity<CinemaUser>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__CinemaUs__3214EC071561484E");
@@ -79,6 +55,11 @@ public partial class DatabaseLibrary : DbContext
                 .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.UnlockDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.CinemaUsers)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CinemaUser_CinemaUserRole");
         });
 
         modelBuilder.Entity<CinemaUserRole>(entity =>
@@ -90,6 +71,23 @@ public partial class DatabaseLibrary : DbContext
             entity.Property(e => e.RoleName)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+
+            entity.HasMany(d => d.Privileges).WithMany(p => p.Roles)
+                .UsingEntity<Dictionary<string, object>>(
+                    "CinemaRolePrivilege",
+                    r => r.HasOne<CinemaPrivilege>().WithMany()
+                        .HasForeignKey("PrivilegeId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__CinemaRol__Privi__2B0A656D"),
+                    l => l.HasOne<CinemaUserRole>().WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__CinemaRol__RoleI__2A164134"),
+                    j =>
+                    {
+                        j.HasKey("RoleId", "PrivilegeId").HasName("PK__CinemaRo__51C4B9FFD5F173A7");
+                        j.ToTable("CinemaRolePrivilege");
+                    });
         });
 
         OnModelCreatingPartial(modelBuilder);

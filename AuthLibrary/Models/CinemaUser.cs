@@ -17,5 +17,5 @@ public partial class CinemaUser
 
     public int RoleId { get; set; }
 
-    public virtual ICollection<CinemaRolePrivilege> CinemaRolePrivileges { get; set; } = new List<CinemaRolePrivilege>();
+    public virtual CinemaUserRole Role { get; set; } = null!;
 }

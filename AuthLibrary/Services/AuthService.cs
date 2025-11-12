@@ -20,8 +20,8 @@ namespace AuthLibrary.Services
             return Convert.ToBase64String(hash);
         }
         public bool Register(string login, string password)
-        { 
-        if (_context.CinemaUsers.Any(u =>u.Login == login)) 
+        {
+            if (_context.CinemaUsers.Any(u => u.Login == login))
                 return false;
             var user = new CinemaUser
             {
@@ -33,7 +33,8 @@ namespace AuthLibrary.Services
             _context.SaveChanges();
             return true;
         }
-        public CinemaUser Authenticate(string login, string password) {
+        public CinemaUser Authenticate(string login, string password)
+        {
             var user = _context.CinemaUsers
                 .Include(u => u.Role)
                 .FirstOrDefault(u => u.Login == login);
@@ -47,8 +48,48 @@ namespace AuthLibrary.Services
 
                 if (user.FailedLoginAttempts >= 3)
                 {
-                    user.UnlockDate = DateTime.Now;
+                    user.UnlockDate = DateTime.Now.AddMinutes(1);
                 }
+                _context.SaveChanges();
+                return null;
+            }
+            user.FailedLoginAttempts = 0;
+            user.UnlockDate = null;
+            _context.SaveChanges();
+
+            return user;
+        }
+
+        public string GetUserRole(string login)
+        {
+            var user = _context.CinemaUsers
+                .Include(u => u.Role)
+                .FirstOrDefault(u => u.Login == login);
+            return user?.Role.RoleName;
+        }
+
+        public List<string> GetUserPrivileges(string login)
+        {
+            var user = _context.CinemaUsers
+                .Include(u => u.Role)
+                .ThenInclude(r => r.Privileges)
+                .FirstOrDefault(u => u.Login ==login);
+
+            return user?.Role.Privileges
+                .Select(p => p.Name)
+                .ToList() ?? new List<string>();
+        }
+
+        public List<string> GetRolePrivileges(string roleName)
+        {
+            var role = _context.CinemaUserRoles
+                .Include(r => r.Privileges)
+                .FirstOrDefault(r => r.RoleName == roleName);
+
+            return role?.Privileges
+                .Select(p => p.Name)
+                .ToList() ?? new List<string>();
+        }
 
     }
 }
