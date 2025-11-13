@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="Вход" Height="450" Width="800">
     <StackPanel>
-        
+        <TextBlock Text="Авторизация" FontSize="16" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <TextBlock Text="Логин:"/>
+        <TextBox x:Name="Login" Margin="0,5,0,20"/>
+
+        <TextBlock Text="Пароль:"/>
+        <PasswordBox x:Name="Password" Margin="0,5,0,20"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="ButtonLogin" Content="Войти" 
+                    Width="80" Height="30" Click="ButtonLogin_Click" Margin="0,0,0,10"/>
+            <Button x:Name="ButtonCancel" Content="Отмена" 
+                    Width="80" Height="30" Click="ButtonCancel_Click"/>
+        </StackPanel>
     </StackPanel>
 </Window>
