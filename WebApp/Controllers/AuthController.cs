@@ -61,6 +61,8 @@ namespace WebApp.Controllers
 
             var token = GenereteJwtToken(user);
 
+            return Ok(token);
+
         }
 
         private string GenereteJwtToken(CinemaUser user)
