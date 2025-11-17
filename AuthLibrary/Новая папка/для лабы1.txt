@@ -1,0 +1,1 @@
+Scaffold-DbContext "Data Source=HoLLOW;Initial Catalog=mssql;User ID=ispp3102;Password=3102;Trust Server Certificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir Contexts -Context DatabaseLibrary -Tables CinemaUser, CinemaUserRole, CinemaRolePrivilege, CinemaPrivilege -Force

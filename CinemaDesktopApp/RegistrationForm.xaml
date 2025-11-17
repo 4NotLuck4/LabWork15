@@ -40,19 +40,19 @@
                  Margin="0,0,0,10"
                  TextChanged="TextBoxPassword_TextChanged"/>
         <!--подтверд password-->
-        <TextBlock Grid.Row="1" Grid.Column="0"
+        <TextBlock Grid.Row="3" Grid.Column="0"
                    Text="Подтверждение пароля:"
                    VerticalAlignment="Center" Margin="0,0,10,10"/>
-        <TextBox Grid.Row="1" Grid.Column="1"
+        <TextBox Grid.Row="3" Grid.Column="1"
                  x:Name="TextBoxConfirmPassword"
                  MaxLength="50"
                  Margin="0,0,0,10"
-                 TextChanged="txtConfirmPassword_TextChanged"/>
+                 TextChanged="TextBoxConfirmPassword_TextChanged"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="ButtonRegister" Content="Зарегистрuровать"
-                    Width="120" Height="30" Click="btnRegister_Click"/>
+                    Width="140" Height="30" Click="ButtonRegister_Click"/>
             <Button x:Name="ButtonCancel" Content="Отмена"
-                    Width="80" Height="30" Click="btnCancel_Click"/>
+                    Width="70" Height="30" Click="ButtonCancel_Click"/>
         </StackPanel>
     </Grid>
 </Window>
